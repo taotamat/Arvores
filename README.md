@@ -1,4 +1,4 @@
-# Arvore_Binaria
+# Árvores
 Códigos relacionados ao assunto de Árvores da disciplina Estruturas de Dados II.<br>
 Possui códigos das seguintes árvores:
   - Árvores Binárias
