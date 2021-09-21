@@ -1,9 +1,10 @@
 # Arvore_Binaria
-Códigos relacionados ao assunto de Árvore Binárias da disciplina Estruturas de Dados II.
-
-arvore_binaria.c = Código que gerencia uma árvore binária de números inteiros; <br>
-
-Possui funções que realizam:
+Códigos relacionados ao assunto de Árvores da disciplina Estruturas de Dados II.<br>
+Possui códigos das seguintes árvores:
+  - Árvores Binárias
+  - Árvores AVL
+<br>
+Cada árvore deve possuir as funções que realizam:
   - Criação de um novo NO
   - Inserção do novo NO na árvore
   - Busca de um NO na árvore
