@@ -5,6 +5,7 @@ Possui códigos das seguintes árvores:
   - Árvores AVL
 <br>
 Cada árvore deve possuir as funções que realizam:<br>
+
   - Criação de um novo NO
   - Inserção do novo NO na árvore
   - Busca de um NO na árvore
