@@ -247,10 +247,13 @@ void remover(ARVORE *arvore, NO **raiz, int valor){
 
 	} else if( valor < (*raiz)->dado ) {
 		remover(arvore, &(*raiz)->esq, valor);
-
 	} else if( valor > (*raiz)->dado ) {
 		remover(arvore, &(*raiz)->dir, valor);
-	} }
+	} 
+
+	gestaoBALANCEAMENTO(raiz);
+
+}
 
 // Função que solicita que o usuário leia um número que seja removido.
 void gestaoREMOVE(ARVORE *arvore) {

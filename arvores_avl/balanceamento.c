@@ -77,27 +77,27 @@ void galho_de_dentro_esquerda(NO **raiz, NO *no) {
 	NO *no1;
 	no1 = NULL;
 	fb = fatorBALANCEAMENTO(no);
-	if( fb == (-1) ) {
+	if( fb <= (-1) ) {
 		no1 = no->dir;
 		(*no).dir = (*no1).esq;
 		no1->esq = no;
 		(*raiz)->esq = no1;
 		no = no1;		
-	} else printf("A sub-arvore esta normal! \n"); 
+	} 
 }
 
 void galho_de_dentro_direita(NO **raiz, NO *no) {
 	int fb;
 	NO *no1;
 	no1 = NULL;
-	fb = fatorBALANCEAMENTO(*raiz);
-	if( fb == 1 ) {
+	fb = fatorBALANCEAMENTO(no);
+	if( fb >= 1 ) {
 		no1 = no->esq;
 		(*no).esq = (*no1).dir;
 		no1->dir = no;
 		(*raiz)->dir = no1;
 		no = no1;
-	} /*else printf("A sub-arvore esta normal! \n"); */}
+	} }
 
 // Função que faz a chamada para as funções que realizam o balanceamento;
 void gestaoHORARIO(NO **raiz){
@@ -127,17 +127,21 @@ void gestaoBALANCEAMENTO(NO **raiz) {
 				// Se o lado pendente for o direito: ir para a função anti-horário;
 
 	int fb; // Fator de balanceamento.
-	ajustaALTURA(*raiz);
-	fb = fatorBALANCEAMENTO(*raiz);
 
-	if( fb < -1 || fb > 1 ){
-		// Está desbalanceado!
-		if( fb > 1 ) {
-			// O lado esquerdo está pendendo.
-			gestaoHORARIO(raiz); // Rotação horaria.
-		} else {
-			// O lado direito está pendendo.
-			gestaoANTIHORARIO(raiz); // Rotação antihoraria
+	if( *raiz != NULL ) {
+		ajustaALTURA(*raiz);
+		fb = fatorBALANCEAMENTO(*raiz);
+
+		if( fb < -1 || fb > 1 ){
+			// Está desbalanceado!
+			if( fb > 1 ) {
+				// O lado esquerdo está pendendo.
+				gestaoHORARIO(raiz); // Rotação horaria.
+			} else {
+				// O lado direito está pendendo.
+				gestaoANTIHORARIO(raiz); // Rotação antihoraria
+			}
+			ajustaALTURA(*raiz);
 		}
 	}
 }
