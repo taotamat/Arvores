@@ -3,6 +3,7 @@ Códigos relacionados ao assunto de Árvores da disciplina Estruturas de Dados I
 Possui códigos das seguintes árvores:
   - Árvores Binárias
   - Árvores AVL
+  - Árvores Rubro-Negra
 <br>
 Cada árvore deve possuir as funções que realizam:<br>
 
