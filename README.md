@@ -4,6 +4,7 @@ Possui códigos das seguintes árvores:
   - Árvores Binárias
   - Árvores AVL
   - Árvores Rubro-Negra
+  - Árvore 2-3
 <br>
 Cada árvore deve possuir as funções que realizam:<br>
 
