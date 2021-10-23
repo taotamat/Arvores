@@ -50,11 +50,12 @@ int main(){
 	
 	arvore = alocaARV();
 
-	int valores[10] = {100, 300, 200, 50, 400, 500, 800, 1000, 20, 700};
+	
+	int valores[7] = {400,800,1000,900,500,1200,100};
 	int i;
 
 
-	for(i=0; i<10; i++){
+	for(i=0; i<7; i++){
 
 		ast();
 		printf("Insercao do %d \n", valores[i]);
@@ -72,10 +73,6 @@ int main(){
 		printf("\n\n");
 
 	}
-
-
-
-
 
 	printf("SUCESSO! \n");
 
@@ -104,6 +101,7 @@ int main(){
 
 			case 3:
 				// FUNÇÃO TAL
+				inordem(arvore->raiz);
 				break;
 
 			case 4:

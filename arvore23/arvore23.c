@@ -103,7 +103,9 @@ NO *addNO(NO *raiz, INFO *info, NO *filho){
 	return raiz; }
 
 // Função que quebra o nó em dois.
-void quebraNO(NO **raiz, INFO **info, INFO **sobe, NO **maior) {
+int quebraNO(NO **raiz, INFO **info, INFO **sobe, NO **maior) {
+
+	int caso;
 
 	if( *maior == NULL )
 		*maior = alocaNO();
@@ -113,38 +115,42 @@ void quebraNO(NO **raiz, INFO **info, INFO **sobe, NO **maior) {
 		*sobe = (*raiz)->info1;
 		(*raiz)->info1 = *info;
 		(*maior)->info1 = (*raiz)->info2;
-	
+		caso = 1;
+
 	} else if( (*info)->informacao < (*raiz)->info2->informacao ) {
 		// a nova info é o valor central.
 		*sobe = *info;
 		(*maior)->info1 = (*raiz)->info2;
+		caso = 2;
 
 	} else {
 		// Info2 da raiz é o valor central.
 		*sobe = (*raiz)->info2;
 		(*maior)->info1 = *info;
-		
+		caso = 3;
 	}
 
+	
 	info = NULL;
 	(*raiz)->info2 = NULL;
 	*maior = ajustaNMRS(*maior);
-	*raiz = ajustaNMRS(*raiz); }
+	*raiz = ajustaNMRS(*raiz);
+	return caso; }
 
 // Função que insere a informação na raiz FOLHA.
 void raizFOLHA(NO **raiz, INFO **info, NO **pai, INFO **sobe, NO **maior, ARVORE **arvore){
 
 	NO *novo;
+	int caso;
 
 	if( (*raiz)->nmrINFO == 1 ){
 		// Raiz só possui uma única informação.
 		*raiz = addNO(*raiz, *info, NULL);
 		*raiz = ajustaNMRS(*raiz);
-	
 
 	} else {
 		// Raiz possui duas informações e terá que ser quebrado.
-		quebraNO(raiz, info, sobe, maior);
+		caso = quebraNO(raiz, info, sobe, maior);
 		if( *pai == NULL ){
 			// Raiz não possui um pai.
 			novo = alocaNO();
@@ -159,9 +165,35 @@ void raizFOLHA(NO **raiz, INFO **info, NO **pai, INFO **sobe, NO **maior, ARVORE
 		}
 	} }
 
+// Função que ajusta os ponteiros assim que o Nó sobe.
+NO *ajustaPONT(NO *maior2, NO **raiz, NO **maior, int caso){
+
+	if(caso == 1){
+		maior2->esq = (*raiz)->cen;
+		maior2->cen = (*raiz)->dir;
+		maior2->dir = NULL;
+		(*raiz)->cen = *maior;
+
+	} else if(caso == 2){
+		maior2->esq = *maior;
+		maior2->cen = (*raiz)->dir;
+		maior2->dir = NULL;
+		
+	} else {
+		maior2->esq = (*raiz)->dir;
+		maior2->cen = *maior;
+	}
+
+	(*raiz)->dir = NULL;
+	(*raiz) = ajustaNMRS(*raiz);
+	maior2 = ajustaNMRS(maior2);
+
+	return maior2; }
+
 
 void ajustaSOBE(NO **raiz, INFO **sobe, NO **pai, NO **maior, ARVORE **arvore){
 
+	int caso;
 	NO *novo;
 	NO *maior2;
 	INFO *sobe2;
@@ -180,11 +212,8 @@ void ajustaSOBE(NO **raiz, INFO **sobe, NO **pai, NO **maior, ARVORE **arvore){
 	
 	} else {
 		// A raiz não possui mais espaço. Então deverá ser quebrado.
-		quebraNO(raiz, sobe, &sobe2, &maior2);
-
-		maior2->esq = (*raiz)->dir;
-		maior2->cen = *maior;
-		(*raiz)->dir = NULL;
+		caso = quebraNO(raiz, sobe, &sobe2, &maior2);
+		maior2 = ajustaPONT(maior2, raiz, maior, caso);
 
 		maior2 = ajustaNMRS(maior2);
 		*raiz = ajustaNMRS(*raiz);
@@ -209,7 +238,6 @@ void ajustaSOBE(NO **raiz, INFO **sobe, NO **pai, NO **maior, ARVORE **arvore){
 			*sobe = sobe2;
 			*maior = maior2;
 		}
-
 	} }
 
 // Função que insere um valor na árvore.
@@ -274,5 +302,23 @@ void imprimir(NO *raiz){
         imprimir(raiz->esq);
         imprimir(raiz->cen);
         imprimir(raiz->dir);
+    } 
+}
+
+
+void inordem(NO *raiz){
+	if (raiz != NULL){
+
+		inordem(raiz->esq);
+    	
+    	if(raiz->info1 != NULL)
+        	printf("%d ", raiz->info1->informacao);
+
+        inordem(raiz->cen);
+
+        if(raiz->info2 != NULL)
+        	printf("%d  ", raiz->info2->informacao);
+       
+        inordem(raiz->dir);
     } 
 }
